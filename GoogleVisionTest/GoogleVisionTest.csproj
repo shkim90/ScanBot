@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="CloudKey.json">
+    <!-- CloudKey.json is a Google service-account secret, gitignored and not present in a fresh
+         checkout - only copy it when a developer has placed one locally, so CI/clean clones still build. -->
+    <Content Include="CloudKey.json" Condition="Exists('CloudKey.json')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
