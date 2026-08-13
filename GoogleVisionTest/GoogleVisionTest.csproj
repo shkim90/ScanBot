@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Authors>Pavel Zaytsev</Authors>
+    <Company>Iberis Software</Company>
+    <Product>ScanBot</Product>
+    <Copyright>Copyright © 2024</Copyright>
+    <Version>2.1.3</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="CloudKey.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="CloudKey.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.9.0.5494" />
+    <PackageReference Include="Google.Cloud.Vision.V1" Version="3.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ScanBot.Data\ScanBot.Data.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,68 @@
+﻿@page "/"
+
+@inherits OwningComponentBase
+@inject IScanService ScanService
+@inject DicomService DicomService
+@inject OcrService OcrService
+@inject IMessageService MessageService
+@inject INotificationService NotificationService
+@inject IPageProgressService PageProgressService
+@inject ILoadingIndicatorService LoadingIndicatorService
+@inject NavigationManager NavigationManager
+@inject ILocalStorageService LocalStorage
+@inject ISessionStorageService SessionStorage
+
+@if (imageRefs == null)
+{
+    <Paragraph>Loading...</Paragraph>
+    return;
+}
+
+<Heading Size="HeadingSize.Is1">Images: @imageRefs.Count</Heading>
+
+<Row Margin="Margin.Is1.FromBottom">
+    <Column>
+        <DateEdit TValue="DateTime" Date="startDate" DateChanged="ChangeStartDate" />
+    </Column>
+    <Column>
+        <DateEdit TValue="DateTime" Date="endDate" DateChanged="ChangeEndDate" />
+    </Column>
+    <Column>
+        <SearchTextEdit Text="@keywordFilter" TextChanged="ChangeKeywordFilter" />
+    </Column>
+</Row>
+<Row Margin="Margin.Is1.FromBottom">
+    <Column>
+        <Buttons>
+            <Button Color="Color.Primary" Clicked="() => fileEdit.ShowPicker()">Upload</Button>
+            <Button Color="Color.Primary" Outline Disabled="selectedImageRefs.Count != 1 || selectedImageRefs[0].Sent" Clicked="EditImage">Edit</Button>
+            <Button Color="Color.Info" Outline Disabled="selectedImageRefs.All(imageRef => imageRef.Sent)" Clicked="DownloadImages">Download</Button>
+            <Button Color="Color.Info" Outline Disabled="selectedImageRefs.All(imageRef => imageRef.Sent)" Clicked="RecognizeImages">Recognize</Button>
+            <Button Color="Color.Info" Outline Disabled="selectedImageRefs.All(imageRef => imageRef.Sent)" Clicked="SendImages">Send</Button>
+            <Button Color="Color.Danger" Outline Disabled="selectedImageRefs.Count == 0" Clicked="DeleteImages">Delete</Button>
+            <Button Color="Color.Secondary" Outline Clicked="ExportImageRefs">Export</Button>
+        </Buttons>
+    </Column>
+    <Column>
+        <ScanControl />
+    </Column>
+    <Column Visibility="Visibility.Invisible">
+        <FileEdit @ref="fileEdit" Filter=".tif" Multiple Changed="ImportImageFiles" />
+    </Column>
+</Row>
+
+<DataGrid Data="imageRefs" Striped SelectionMode="DataGridSelectionMode.Multiple" @bind-SelectedRows="selectedImageRefs" ShowPager ShowPageSizes PageSize="pageSize" CurrentPage="currentPage"
+          PageSizeChanged="ChangePageSize" PageChanged="ChangePage">
+    <DataGridMultiSelectColumn />
+    <DataGridColumn Caption="Date" Field="@(nameof(ImageRefEx.Source) + "." + nameof(ImageRef.Timestamp))" DisplayFormat="{0:d}" />
+    <DataGridColumn Caption="Time" Field="@(nameof(ImageRefEx.Source) + "." + nameof(ImageRef.Timestamp))" DisplayFormat="{0:t}" />
+    <DataGridCheckColumn Caption="Sent" Field="@nameof(ImageRefEx.Sent)" />
+    @foreach (var tagTemplate in ImageTemplate.Default.Tags)
+    {
+        <DataGridColumn Caption="@tagTemplate.Key">
+            <DisplayTemplate>
+                @(context.Tags.TryGetValue(tagTemplate.Key, out var value) ? value : null)
+            </DisplayTemplate>
+        </DataGridColumn>
+    }
+</DataGrid>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <Copyright>Copyright © 2022</Copyright>
+    <Version>1.4.0</Version>
+    <Description>Microtek toolkit test.</Description>
+    <Authors>Pavel Zaytsev</Authors>
+    <Company>Iberis Software</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BitMiracle.LibTiff.NET" Version="2.4.649" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MtToolkit\MtToolkit.csproj" />
+  </ItemGroup>
+
+</Project>

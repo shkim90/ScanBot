@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+    <Copyright>Copyright © 2024</Copyright>
+    <Version>1.4.2</Version>
+    <Description>Microtek toolkit library.</Description>
+    <Authors>Pavel Zaytsev</Authors>
+    <Company>Iberis Software</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NTwain" Version="3.7.4" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,22 @@
+﻿@inject Settings Settings
+
+<Validations @ref="validations" Mode="ValidationMode.Manual">
+    <Field>
+        <FieldLabel>Host:</FieldLabel>
+        <Validation Validator="ValidationExtention.IsTrimmedNotEmpty">
+            <TextEdit @bind-Text="host" />
+        </Validation>
+    </Field>
+    <Field>
+        <FieldLabel>Text Confidence:</FieldLabel>
+        <NumericEdit @bind-Value="confidence" Min="0" Max="1" Step="0.01m" />
+    </Field>
+    <Field>
+        <Check @bind-Checked="recognizeOrientation">Recognize Orientation</Check>
+    </Field>
+    <Field>
+        <FieldLabel>Merge Distance:</FieldLabel>
+        <NumericEdit @bind-Value="mergeDistance" Min="0" Max="10" />
+        <FieldHelp>mm</FieldHelp>
+    </Field>
+</Validations>

@@ -1,0 +1,57 @@
+﻿@inject Settings Settings
+
+<Validations @ref="validations" Mode="ValidationMode.Manual">
+    <Row>
+        <Column>
+            <Field>
+                <FieldLabel>Root Folder Path:</FieldLabel>
+                <TextEdit @bind-Text="rootFolderPath" />
+                <FieldHelp>If the path is empty or does not exist it is under @nameof(ScanBot) folder</FieldHelp>
+            </Field>
+            <Field>
+                <FieldLabel>Upload Folder Path:</FieldLabel>
+                <TextEdit @bind-Text="uploadFolderPath" />
+                <FieldHelp>If the path exists it is used for auto-uploading files</FieldHelp>
+            </Field>
+            <Field>
+                <Check @bind-Checked="rotateOnUpload">Rotate</Check>
+                <FieldHelp>Used for auto-uploading files</FieldHelp>
+            </Field>
+            <Field>
+                <FieldLabel>Scan Date:</FieldLabel>
+                <DateEdit @bind-Date="scanDate" />
+            </Field>
+            <Field>
+                <FieldLabel>Protocol Name:</FieldLabel>
+                <TextEdit @bind-Text="protocolName" />
+            </Field>
+        </Column>
+        <Column>
+            <Field>
+                <Check @bind-Checked="sendToServer">Send to Server</Check>
+            </Field>
+            <Field>
+                <FieldLabel>Server Host:</FieldLabel>
+                <Validation Validator="ValidationExtention.IsTrimmedNotEmpty">
+                    <TextEdit @bind-Text="serverHost" Disabled="!sendToServer" />
+                </Validation>
+            </Field>
+            <Field>
+                <FieldLabel>Server Port:</FieldLabel>
+                <NumericEdit @bind-Value="serverPort" Min="1" Max="65535" Disabled="!sendToServer" />
+            </Field>
+            <Field>
+                <FieldLabel>Server AE Title:</FieldLabel>
+                <Validation Validator="ValidationExtention.IsTrimmedNotEmpty">
+                    <TextEdit MaxLength="16" @bind-Text="serverAeTitle" Disabled="!sendToServer" />
+                </Validation>
+            </Field>
+            <Field>
+                <FieldLabel>Client AE Title:</FieldLabel>
+                <Validation Validator="ValidationExtention.IsTrimmedNotEmpty">
+                    <TextEdit MaxLength="16" @bind-Text="clientAeTitle" Disabled="!sendToServer" />
+                </Validation>
+            </Field>
+        </Column>
+    </Row>
+</Validations>

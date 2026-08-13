@@ -1,0 +1,36 @@
+﻿@using MtToolkit
+
+@inject Settings Settings
+@inject IScanService ScanService
+
+<Field>
+    <FieldLabel>Max Image Height:</FieldLabel>
+    <NumericEdit @bind-Value="maxImageHeightInInches" Min="17" Max="200" />
+    <FieldHelp>inches</FieldHelp>
+</Field>
+<Field>
+    <FieldLabel>Resolution:</FieldLabel>
+    <Select @bind-SelectedValue="resolution">
+        @if (ScanService.SupportedResolutionValues != null)
+        {
+            foreach (var resolutionValue in ScanService.SupportedResolutionValues)
+            {
+                <SelectItem Value="resolutionValue">@resolutionValue dpi</SelectItem>
+            }
+        }
+    </Select>
+</Field>
+@if (ScanService is MtScanService)
+{
+    <Field>
+        <FieldLabel>Max Density:</FieldLabel>
+        <Select @bind-SelectedValue="density">
+            <SelectItem Value="MtDensity.D3_50">3.50</SelectItem>
+            <SelectItem Value="MtDensity.D4_00">4.00</SelectItem>
+            <SelectItem Value="MtDensity.D4_50">4.50</SelectItem>
+        </Select>
+    </Field>
+}
+<Field>
+    <Check @bind-Checked="rotate">Rotate</Check>
+</Field>

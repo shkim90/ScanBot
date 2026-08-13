@@ -1,0 +1,13 @@
+﻿@inject Settings Settings
+@inject ControlService ControlService
+
+<Field>
+    <FieldLabel>Serial Port:</FieldLabel>
+    <Select @bind-SelectedValue="serialPort">
+        <SelectItem TValue="string" />
+        @foreach (var portName in ControlService.GetSerialPortNames())
+        {
+            <SelectItem Value="@portName">@portName</SelectItem>
+        }
+    </Select>
+</Field>

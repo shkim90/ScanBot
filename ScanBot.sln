@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScanBot", "ScanBot\ScanBot.csproj", "{935A4DDE-7E8F-4018-991E-9BD99259E7C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VidarToolkit", "VidarToolkit\VidarToolkit\VidarToolkit.csproj", "{E2650D55-1386-41B0-9393-EBF294AB01C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScanBot.Data", "ScanBot.Data\ScanBot.Data.csproj", "{8CCC0E2F-A8D7-4E61-A36B-6729B949CFB6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleVisionTest", "GoogleVisionTest\GoogleVisionTest.csproj", "{5750CFA1-0579-4BE5-B051-D21E9448176C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicBoxTest", "MagicBoxTest\MagicBoxTest.csproj", "{A5507B14-A7DD-4BB8-86B4-0535726B3172}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MtToolkit", "MtToolkit\MtToolkit\MtToolkit.csproj", "{F62D1DF9-52F3-4C87-91EB-D133B21C965F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOcrTest", "IOcrTest\IOcrTest.csproj", "{2C3B0234-AA66-4649-BE34-4BEBD3C12BDF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{935A4DDE-7E8F-4018-991E-9BD99259E7C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935A4DDE-7E8F-4018-991E-9BD99259E7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935A4DDE-7E8F-4018-991E-9BD99259E7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935A4DDE-7E8F-4018-991E-9BD99259E7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2650D55-1386-41B0-9393-EBF294AB01C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2650D55-1386-41B0-9393-EBF294AB01C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2650D55-1386-41B0-9393-EBF294AB01C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2650D55-1386-41B0-9393-EBF294AB01C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CCC0E2F-A8D7-4E61-A36B-6729B949CFB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CCC0E2F-A8D7-4E61-A36B-6729B949CFB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CCC0E2F-A8D7-4E61-A36B-6729B949CFB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CCC0E2F-A8D7-4E61-A36B-6729B949CFB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5750CFA1-0579-4BE5-B051-D21E9448176C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5750CFA1-0579-4BE5-B051-D21E9448176C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5750CFA1-0579-4BE5-B051-D21E9448176C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5750CFA1-0579-4BE5-B051-D21E9448176C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5507B14-A7DD-4BB8-86B4-0535726B3172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5507B14-A7DD-4BB8-86B4-0535726B3172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5507B14-A7DD-4BB8-86B4-0535726B3172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5507B14-A7DD-4BB8-86B4-0535726B3172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62D1DF9-52F3-4C87-91EB-D133B21C965F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62D1DF9-52F3-4C87-91EB-D133B21C965F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62D1DF9-52F3-4C87-91EB-D133B21C965F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62D1DF9-52F3-4C87-91EB-D133B21C965F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C3B0234-AA66-4649-BE34-4BEBD3C12BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C3B0234-AA66-4649-BE34-4BEBD3C12BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C3B0234-AA66-4649-BE34-4BEBD3C12BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C3B0234-AA66-4649-BE34-4BEBD3C12BDF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C2295B5F-1989-4DCB-AFE0-316F09B8972F}
+	EndGlobalSection
+EndGlobal

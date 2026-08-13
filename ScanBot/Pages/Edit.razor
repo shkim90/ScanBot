@@ -1,0 +1,45 @@
+﻿@page "/edit/{ImageRefId:int}"
+
+@using Emgu.CV.CvEnum
+
+@inherits OwningComponentBase
+@inject NavigationManager NavigationManager
+
+@if (imageRef == null)
+{
+    <Paragraph>Loading...</Paragraph>
+    return;
+}
+
+<Form>
+    <Fields>
+        @{
+            var i = 0;
+        }
+        @foreach (var tagTemplate in ImageTemplate.Default.Tags)
+        {
+            <Field ColumnSize="ColumnSize.Is2">
+                <FieldLabel>@tagTemplate.Key:</FieldLabel>
+                <TextEdit Autofocus="i++ == 0" @bind-Text="@this[tagTemplate.Key]" />
+            </Field>
+        }
+    </Fields>
+
+    <Row Margin="Margin.Is4.FromBottom">
+        <Column>
+            <Button Color="Color.Primary" Type="ButtonType.Submit" PreventDefaultOnSubmit Clicked="SubmitChanges">Submit</Button>
+        </Column>
+        <Column>
+            <Buttons>
+                <Button Color="Color.Info" Outline Clicked="() => FlipImage(FlipType.Horizontal)">Left-Right</Button>
+                <Button Color="Color.Info" Outline Clicked="() => FlipImage(FlipType.Vertical)">Top-Bottom</Button>
+                <Button Color="Color.Info" Outline Clicked="() => RotateImage(RotateFlags.Rotate90CounterClockwise)">Rotate CCW</Button>
+                <Button Color="Color.Info" Outline Clicked="() => RotateImage(RotateFlags.Rotate90Clockwise)">Rotate CW</Button>
+            </Buttons>
+        </Column>
+    </Row>
+</Form>
+
+<Figure>
+    <FigureImage Source="@imageUri" />
+</Figure>

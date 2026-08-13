@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "bootstrap@4.6.1",
+      "destination": "wwwroot/lib/bootstrap/",
+      "files": [
+        "dist/css/bootstrap-grid.css",
+        "dist/css/bootstrap-grid.css.map",
+        "dist/css/bootstrap-grid.min.css",
+        "dist/css/bootstrap-grid.min.css.map",
+        "dist/css/bootstrap-reboot.css",
+        "dist/css/bootstrap-reboot.css.map",
+        "dist/css/bootstrap-reboot.min.css",
+        "dist/css/bootstrap-reboot.min.css.map",
+        "dist/css/bootstrap.css",
+        "dist/css/bootstrap.css.map",
+        "dist/css/bootstrap.min.css",
+        "dist/css/bootstrap.min.css.map"
+      ]
+    },
+    {
+      "library": "font-awesome-5-css@5.4.1",
+      "destination": "wwwroot/lib/font-awesome-5-css/"
+    }
+  ]
+}

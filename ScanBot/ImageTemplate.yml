@@ -1,0 +1,81 @@
+﻿tags:
+- key: Ship
+  pattern: '\d{4}'
+  dicom_tag: (0010,0020)
+- key: Point
+  pattern: 'PN-(?<value>\w+)|\w+-\w+'
+  dicom_tag: (0020,0010)
+- key: Block
+  pattern: '[A-Z]\d{3}[A-Z]([xX]([A-Z]\d{3}[A-Z])?)?'
+  dicom_tag: (0008,1030)
+- key: Drawing
+  pattern: '\w{12}'
+  dicom_tag: (0032,1060)
+- key: Piece
+  pattern: '\w{8}'
+  dicom_tag: (0040,1001)
+- key: Joint
+  pattern: 'B(\d{1,2}[A-Z]?|\d{3})'
+  dicom_tag: (0040,1001)
+- key: Date
+  pattern: '\d{6}F?'
+  date_format: yyMMdd
+  dicom_tag: (0010,0030)
+- key: Section
+  pattern: 'LOC(?<value>\d{2})'
+  dicom_tag: (0008,103e)
+- key: Location
+  pattern: '\d{2,3}|0E'
+  multiplicity: 2
+  separator: '-'
+  dicom_tag: (0008,103e)
+- key: Diameter
+  pattern: '\d{2,3}A'
+  dicom_tag: (0008,103e)
+- key: Revision
+  pattern: 'R\d{1,2}'
+  dicom_tag: (0008,0050)
+
+ignored_tag_patterns:
+- 'IQI'
+- '#5'
+
+orientation_hint_tags:
+- text: '#1'
+- text: '#2'
+  flip: 'horizontal'
+- text: '#3'
+  flip: 'both'
+- text: '#4'
+  flip: 'vertical'
+
+string_mapping:
+- ['e', 'O']
+
+film_types:
+- id: 1
+  tag_keys: [Ship, Point, Block, Date]
+- id: 2
+  tag_keys: [Ship, Point, Drawing, Section, Date]
+- id: 3
+  tag_keys: [Ship, Drawing, Piece, Joint, Diameter, Date]
+- id: 4
+  tag_keys: [Ship, Point, Drawing, Date]
+- id: 5
+  tag_keys: [Ship, Drawing, Piece, Diameter, Joint, Section, Date]
+
+study_tag_keys: [Ship, Point, Block, Drawing, Piece, Joint, Date]
+
+laser_marker_rows:
+- row: 0
+  tag_keys: [Ship, Section, Location, Revision]
+- row: 1
+  tag_keys: [Block]
+- row: 2
+  tag_keys: [Point]
+- row: 3
+  tag_keys: [Drawing]
+- row: 4
+  tag_keys: [Piece, Joint]
+- row: 5
+  tag_keys: [Diameter, Date]

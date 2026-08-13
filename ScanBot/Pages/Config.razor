@@ -1,0 +1,51 @@
+﻿@page "/config"
+
+@inject Settings Settings
+@inject ControlService ControlService
+@inject IScanService ScanService
+@inject UploadService UploadService
+@inject NavigationManager NavigationManager
+
+<Heading Size="HeadingSize.Is1">Configuration</Heading>
+
+<Row>
+    <Column ColumnSize="ColumnSize.IsHalf">
+        <Card Margin="Margin.Is4.FromBottom">
+            <CardHeader>
+                <CardSubtitle>Storage</CardSubtitle>
+            </CardHeader>
+            <CardBody>
+                <StoreConfig @ref="storeConfig" />
+            </CardBody>
+        </Card>
+        <Button Color="Color.Primary" Clicked="SubmitChanges">Submit</Button>
+    </Column>
+    <Column ColumnSize="ColumnSize.IsQuarter">
+        <Card Margin="Margin.Is4.FromBottom">
+            <CardHeader>
+                <CardSubtitle>Control</CardSubtitle>
+            </CardHeader>
+            <CardBody>
+                <ControlConfig @ref="controlConfig" />
+            </CardBody>
+        </Card>
+        <Card Margin="Margin.Is4.FromBottom">
+            <CardHeader>
+                <CardSubtitle>Digitizer</CardSubtitle>
+            </CardHeader>
+            <CardBody>
+                <ScanConfig @ref="scanConfig" />
+            </CardBody>
+        </Card>
+    </Column>
+    <Column ColumnSize="ColumnSize.IsQuarter">
+        <Card Margin="Margin.Is4.FromBottom">
+            <CardHeader>
+                <CardSubtitle>OCR</CardSubtitle>
+            </CardHeader>
+            <CardBody>
+                <OcrConfig @ref="ocrConfig" />
+            </CardBody>
+        </Card>
+    </Column>
+</Row>

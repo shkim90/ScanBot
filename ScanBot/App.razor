@@ -1,0 +1,26 @@
+<ThemeProvider Theme="theme">
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <Paragraph>Sorry, there's nothing at this address.</Paragraph>
+            </LayoutView>
+        </NotFound>
+    </Router>
+    <MessageProvider />
+    <NotificationProvider />
+    <PageProgressProvider />
+    <ApplicationLoadingIndicator />
+</ThemeProvider>
+
+@code {
+    Theme theme = new()
+    {
+        BarOptions = new()
+        {
+            HorizontalHeight = "75px"
+        }
+    };
+}

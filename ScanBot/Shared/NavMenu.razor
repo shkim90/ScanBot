@@ -1,0 +1,20 @@
+﻿<Bar Breakpoint="Breakpoint.Desktop" Background="Background.Dark" ThemeContrast="ThemeContrast.Dark" Margin="Margin.Is3.FromBottom" Padding="Padding.Is4.OnX">
+    <BarToggler />
+    <BarMenu>
+        <BarBrand>ScanBot @version</BarBrand>
+        <BarStart>
+            <BarLink To="">Images</BarLink>
+            <BarLink To="config">Configuration</BarLink>
+        </BarStart>
+    </BarMenu>
+</Bar>
+
+@code {
+    string version;
+
+    protected override void OnInitialized()
+    {
+        var name = GetType().Assembly.GetName();
+        version = $"v{name.Version.ToString(3)}";
+    }
+}

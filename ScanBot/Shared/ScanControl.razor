@@ -1,0 +1,8 @@
+﻿@implements IDisposable
+@inject ControlService ControlService
+
+<Buttons>
+    <Button Color="Color.Info" Disabled="!ControlService.IsReady" Clicked="ScanFilm">Scan</Button>
+    <Button Color="Color.Danger" Outline Clicked="AbortFilm">Abort</Button>
+    <Button Color="Color.Secondary" Outline Disabled="!ControlService.IsReady" Clicked="EjectFilm">Eject</Button>
+</Buttons>

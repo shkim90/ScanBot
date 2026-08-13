@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <DisableWinExeOutputInference>true</DisableWinExeOutputInference>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Copyright>Copyright © 2024</Copyright>
+    <Version>3.4.3</Version>
+    <Authors>Pavel Zaytsev</Authors>
+    <Company>Iberis Software</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ImageTemplate.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\VidarToolkit\Api\x64\VToolkit.dll" Link="VToolkit.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ImageTemplate.yml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BitMiracle.LibTiff.NET" Version="2.4.649" />
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+    <PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="1.2.5" />
+    <PackageReference Include="Blazorise.Components" Version="1.2.5" />
+    <PackageReference Include="Blazorise.DataGrid" Version="1.2.5" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.2.5" />
+    <PackageReference Include="Blazorise.LoadingIndicator" Version="1.2.5" />
+    <PackageReference Include="DicomScu" Version="1.2.0" />
+    <PackageReference Include="DotNetZip" Version="1.16.0" />
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.9.0.5494" />
+    <PackageReference Include="fo-dicom.NetCore" Version="4.0.8" />
+    <PackageReference Include="fo-dicom.Serilog" Version="4.0.8" />
+    <PackageReference Include="Google.Cloud.Vision.V1" Version="3.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    <PackageReference Include="System.IO.Ports" Version="8.0.0" />
+    <PackageReference Include="YamlDotNet" Version="15.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MtToolkit\MtToolkit\MtToolkit.csproj" />
+    <ProjectReference Include="..\ScanBot.Data\ScanBot.Data.csproj" />
+    <ProjectReference Include="..\VidarToolkit\VidarToolkit\VidarToolkit.csproj" />
+  </ItemGroup>
+
+</Project>

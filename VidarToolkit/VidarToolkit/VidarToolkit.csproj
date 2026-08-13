@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Copyright>Copyright © 2022</Copyright>
+    <Version>1.3.0</Version>
+    <Description>VIDAR toolkit library.</Description>
+    <Authors>Pavel Zaytsev</Authors>
+    <Company>Iberis Software</Company>
+  </PropertyGroup>
+
+</Project>
