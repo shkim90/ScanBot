@@ -66,6 +66,13 @@ namespace ScanBot
 
             public bool MatchesPattern(string text) => DateFormat != null ? ConvertToDate(text) != null : Regex.IsMatch(text, "^(" + Pattern + ")$");
 
+            // When true, a merged label that already fully matches this tag is excluded from
+            // accepting further merges (see Label.Merge). Only set this on tags whose pattern is a
+            // FIXED length and distinctive enough that a partial in-progress value could never falsely
+            // match it (e.g. Piece_No_2's P+digit). A variable-length pattern (e.g. \d{1,3}) can look
+            // "complete" after the shortest alternative matches, locking out the remaining digits.
+            public bool LockWhenMatched { get; set; }
+
             public string RetrieveTextByPattern(string text)
             {
                 var match = Regex.Match(text, "^(" + Pattern + ")$");

@@ -55,10 +55,14 @@ namespace ScanBot.Services
             var labels = await m_Engine.FindLabels(byteImage);
             labels.ForEach(label => label.OrientationHint = m_OrientationHintTags.ContainsKey(label.Text));
             var pixelSpacing = 25.4 / resolution;
-            var mergeDistance = (int)Math.Round(m_Settings.MergeDistanceInMm / pixelSpacing);
-            labels = Label.Merge(labels, mergeDistance);
+            var mergeXDistance = (int)Math.Round(m_Settings.MergeXDistanceInMm / pixelSpacing);
+            var mergeYDistance = (int)Math.Round(m_Settings.MergeYDistanceInMm / pixelSpacing);
+            labels = Label.Merge(labels, mergeXDistance, mergeYDistance, IsLockedTagValue);
             return labels;
         }
+
+        private static bool IsLockedTagValue(string text) =>
+            ImageTemplate.Default.Tags.Any(tagTemplate => tagTemplate.LockWhenMatched && tagTemplate.MatchesPattern(text));
 
         private static Dictionary<string, string> FindTags(List<Label> labels)
         {

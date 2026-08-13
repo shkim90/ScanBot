@@ -95,7 +95,11 @@ namespace ScanBot
 
             public bool RecognizeOrientation { get; set; }
 
-            public double MergeDistanceInMm { get; set; } = 3;
+            // Separate because same-line vertical jitter and same-field horizontal gaps are different
+            // physical quantities - see the comment on Label.Merge for why one shared distance can't fit both.
+            public double MergeXDistanceInMm { get; set; } = 8;
+
+            public double MergeYDistanceInMm { get; set; } = 2;
 
             public int Engine { get; set; } = 1;
 
