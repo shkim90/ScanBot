@@ -22,6 +22,13 @@ namespace ScanBot.Services
 
         public async Task<List<Label>> FindLabels(Image<Gray, byte> byteImage)
         {
+            // Host "localhost" means no real OCR server is running (e.g. testing the scan/DICOM
+            // pipeline without a recognition backend) - skip the call and return no labels.
+            if (string.Equals(m_Settings.Host, "localhost", StringComparison.OrdinalIgnoreCase))
+            {
+                return new List<Label>();
+            }
+
             using var fileContent = new ByteArrayContent(byteImage.ToJpegData(100));
             fileContent.Headers.ContentType = new("image/jpeg");
             using var content = new MultipartFormDataContent
