@@ -1,6 +1,0 @@
-[submodule "VidarToolkit"]
-	path = VidarToolkit
-	url = https://github.com/iberisoft/VidarToolkit.git
-[submodule "MtToolkit"]
-	path = MtToolkit
-	url = https://github.com/iberisoft/MtToolkit.git
