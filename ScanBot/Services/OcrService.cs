@@ -44,6 +44,10 @@ namespace ScanBot.Services
                 }
             }
 
+            // Safety net for noise that OCR detects as multiple fragments and only becomes a
+            // complete match for an ignored pattern once Label.Merge reassembles it - the pre-merge
+            // filter in FindLabels only catches noise that already reads as one complete token.
+            labels.RemoveAll(label => !label.OrientationHint && ImageTemplate.Default.MatchesIgnoredTagPattern(label.Text));
             labels.ForEach(label => label.Text = ImageTemplate.Default.MapStrings(label.Text));
             return (FindTags(labels), imageModified);
         }
@@ -51,15 +55,23 @@ namespace ScanBot.Services
         private async Task<List<Label>> FindLabels(Image<Gray, ushort> image, ushort resolution)
         {
             using var byteImage = image.ToByteImage();
+            var rawLabels = await m_Engine.FindLabels(byteImage);
+            // OrientationHint must be set before ignored-pattern filtering, and an orientation
+            // marker must never be dropped by that filter - otherwise, if a future template edit
+            // ever makes an ignored_tag_pattern match an orientation_hint_tags text, the marker
+            // would be deleted before FindTags ever gets a chance to find it as the hint, and the
+            // required flip would be silently skipped.
+            rawLabels.ForEach(label => label.OrientationHint = m_OrientationHintTags.ContainsKey(label.Text));
             // Ignored noise (IQI markers, etc.) is filtered before merging, not after: once a noise
             // token has fused onto real data (e.g. "95P"+"IQI"+"T12" -> "95PIQIT12"), no pattern
             // match can tell the noise apart from the data anymore, so removing it post-merge either
             // misses it or - anchored - has to keep the whole contaminated label. Removing it here
-            // stops it from ever becoming a merge candidate in the first place.
-            var labels = (await m_Engine.FindLabels(byteImage))
-                .Where(label => !ImageTemplate.Default.MatchesIgnoredTagPattern(label.Text))
+            // stops it from ever becoming a merge candidate in the first place. A post-merge pass
+            // still runs in FindTags as a safety net for noise OCR splits into several fragments
+            // that only becomes a complete ignored token once merge reassembles it.
+            var labels = rawLabels
+                .Where(label => label.OrientationHint || !ImageTemplate.Default.MatchesIgnoredTagPattern(label.Text))
                 .ToList();
-            labels.ForEach(label => label.OrientationHint = m_OrientationHintTags.ContainsKey(label.Text));
             var pixelSpacing = 25.4 / resolution;
             var mergeXDistance = (int)Math.Round(m_Settings.MergeXDistanceInMm / pixelSpacing);
             var mergeYDistance = (int)Math.Round(m_Settings.MergeYDistanceInMm / pixelSpacing);
