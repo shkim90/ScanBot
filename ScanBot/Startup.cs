@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScanBot.Data;
 using ScanBot.Services;
+using System;
 
 namespace ScanBot
 {
@@ -22,6 +23,12 @@ namespace ScanBot
         }
 
         public IConfiguration Configuration { get; }
+
+        // Compares only the host part (before an optional ":port") so "localhost:8000" matches
+        // the same as bare "localhost", since every real Host value in this config also uses the
+        // host:port convention.
+        private static bool IsLocalhost(string host) =>
+            host?.Split(':')[0].Equals("localhost", StringComparison.OrdinalIgnoreCase) == true;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -41,20 +48,30 @@ namespace ScanBot
                     break;
             }
             services.AddSingleton<OcrService>();
-            switch (settings.Ocr.Engine)
+            // Host set to "localhost" (optionally with a port, e.g. "localhost:8000") means no real
+            // OCR server is running - exercise the scan/DICOM pipeline without a recognition backend,
+            // regardless of which Engine is configured, rather than special-casing one engine only.
+            if (IsLocalhost(settings.Ocr.Host))
             {
-                case 0:
-                    services.AddSingleton<IOcrEngine, MagicBoxEngine>();
-                    break;
-                case 1:
-                    services.AddSingleton<IOcrEngine, NewMagicBoxEngine>();
-                    break;
-                case 2:
-                    services.AddSingleton<IOcrEngine, GoogleVisionEngine>();
-                    break;
-                case 3:
-                    services.AddSingleton<IOcrEngine, OcrEngine>();
-                    break;
+                services.AddSingleton<IOcrEngine, NullOcrEngine>();
+            }
+            else
+            {
+                switch (settings.Ocr.Engine)
+                {
+                    case 0:
+                        services.AddSingleton<IOcrEngine, MagicBoxEngine>();
+                        break;
+                    case 1:
+                        services.AddSingleton<IOcrEngine, NewMagicBoxEngine>();
+                        break;
+                    case 2:
+                        services.AddSingleton<IOcrEngine, GoogleVisionEngine>();
+                        break;
+                    case 3:
+                        services.AddSingleton<IOcrEngine, OcrEngine>();
+                        break;
+                }
             }
             services.AddTransient<StoreService>();
             services.AddSingleton<UploadService>();
