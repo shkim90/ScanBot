@@ -38,7 +38,11 @@ namespace ScanBot
         // Anchored so a noise token that gets fused onto legitimate data by an over-merge (e.g.
         // "95PIQIT12") doesn't have the whole label silently deleted just because it CONTAINS a
         // pattern like "IQI" - only a label that IS entirely that noise pattern gets dropped.
-        public bool MatchesIgnoredTagPattern(string text) => IgnoredTagPatterns.Any(pattern => Regex.IsMatch(text, "^(" + pattern + ")$"));
+        public bool MatchesIgnoredTagPattern(string text) => IgnoredTagPatterns.Any(pattern => Regex.IsMatch(text, Anchor(pattern)));
+
+        // Every regex pattern in this file must match the WHOLE label text, never a substring of
+        // it, so this is the one place that builds the anchored form.
+        internal static string Anchor(string pattern) => "^(" + pattern + ")$";
 
         public List<string[]> StringMapping { get; set; } = new();
 
@@ -67,7 +71,7 @@ namespace ScanBot
 
             public string Pattern { get; set; }
 
-            public bool MatchesPattern(string text) => DateFormat != null ? ConvertToDate(text) != null : Regex.IsMatch(text, "^(" + Pattern + ")$");
+            public bool MatchesPattern(string text) => DateFormat != null ? ConvertToDate(text) != null : Regex.IsMatch(text, Anchor(Pattern));
 
             // When true, a merged label that already fully matches this tag is excluded from
             // accepting further merges (see Label.Merge). Only set this on tags whose pattern is a
@@ -78,7 +82,7 @@ namespace ScanBot
 
             public string RetrieveTextByPattern(string text)
             {
-                var match = Regex.Match(text, "^(" + Pattern + ")$");
+                var match = Regex.Match(text, Anchor(Pattern));
                 var group = match.Groups["value"];
                 return group.Success ? group.Value : match.Value;
             }
