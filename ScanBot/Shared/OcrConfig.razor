@@ -15,8 +15,13 @@
         <Check @bind-Checked="recognizeOrientation">Recognize Orientation</Check>
     </Field>
     <Field>
-        <FieldLabel>Merge Distance:</FieldLabel>
-        <NumericEdit @bind-Value="mergeDistance" Min="0" Max="10" />
-        <FieldHelp>mm</FieldHelp>
+        <FieldLabel>Merge X Distance:</FieldLabel>
+        <NumericEdit @bind-Value="mergeXDistance" Min="0" Max="20" />
+        <FieldHelp>mm - horizontal gap bridged within the same line</FieldHelp>
+    </Field>
+    <Field>
+        <FieldLabel>Merge Y Distance:</FieldLabel>
+        <NumericEdit @bind-Value="mergeYDistance" Min="0" Max="20" />
+        <FieldHelp>mm - vertical tolerance for "same line"</FieldHelp>
     </Field>
 </Validations>

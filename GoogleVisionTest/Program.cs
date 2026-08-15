@@ -72,7 +72,7 @@ namespace GoogleVisionTest
             stopwatch.Stop();
             Console.WriteLine($"Processing {imageFilePath}: {stopwatch.ElapsedMilliseconds} ms");
 
-            labels = Label.Merge(labels, 10);
+            labels = Label.Merge(labels, 10, 10, _ => false);
             ShowLabels(imageFilePath, labels);
         }
 

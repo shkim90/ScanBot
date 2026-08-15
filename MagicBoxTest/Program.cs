@@ -88,7 +88,7 @@ namespace MagicBoxTest
             stopwatch.Stop();
             Console.WriteLine($"Processing {imageFilePath}: {stopwatch.ElapsedMilliseconds} ms");
 
-            labels = Label.Merge(labels, 30);
+            labels = Label.Merge(labels, 30, 30, _ => false);
             if (m_CleanLabels)
             {
                 CleanLabels(image, imageFilePath, labels);

@@ -8,7 +8,8 @@ namespace ScanBot.Shared
         string host;
         double confidence;
         bool recognizeOrientation;
-        double mergeDistance;
+        double mergeXDistance;
+        double mergeYDistance;
         Validations validations;
 
         protected override void OnInitialized()
@@ -16,7 +17,8 @@ namespace ScanBot.Shared
             host = Settings.Ocr.Host;
             confidence = Settings.Ocr.Confidence;
             recognizeOrientation = Settings.Ocr.RecognizeOrientation;
-            mergeDistance = Settings.Ocr.MergeDistanceInMm;
+            mergeXDistance = Settings.Ocr.MergeXDistanceInMm;
+            mergeYDistance = Settings.Ocr.MergeYDistanceInMm;
         }
 
         public async Task<bool> ValidateSettings() => await validations.ValidateAll();
@@ -26,7 +28,8 @@ namespace ScanBot.Shared
             Settings.Ocr.Host = host.Trim();
             Settings.Ocr.Confidence = confidence;
             Settings.Ocr.RecognizeOrientation = recognizeOrientation;
-            Settings.Ocr.MergeDistanceInMm = mergeDistance;
+            Settings.Ocr.MergeXDistanceInMm = mergeXDistance;
+            Settings.Ocr.MergeYDistanceInMm = mergeYDistance;
         }
     }
 }
