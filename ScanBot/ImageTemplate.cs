@@ -35,7 +35,10 @@ namespace ScanBot
 
         public List<string> IgnoredTagPatterns { get; set; } = new();
 
-        public bool MatchesIgnoredTagPattern(string text) => IgnoredTagPatterns.Any(pattern => Regex.IsMatch(text, pattern));
+        // Anchored so a noise token that gets fused onto legitimate data by an over-merge (e.g.
+        // "95PIQIT12") doesn't have the whole label silently deleted just because it CONTAINS a
+        // pattern like "IQI" - only a label that IS entirely that noise pattern gets dropped.
+        public bool MatchesIgnoredTagPattern(string text) => IgnoredTagPatterns.Any(pattern => Regex.IsMatch(text, "^(" + pattern + ")$"));
 
         public List<string[]> StringMapping { get; set; } = new();
 

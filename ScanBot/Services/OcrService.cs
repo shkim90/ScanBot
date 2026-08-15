@@ -44,7 +44,6 @@ namespace ScanBot.Services
                 }
             }
 
-            labels.RemoveAll(label => ImageTemplate.Default.MatchesIgnoredTagPattern(label.Text));
             labels.ForEach(label => label.Text = ImageTemplate.Default.MapStrings(label.Text));
             return (FindTags(labels), imageModified);
         }
@@ -52,7 +51,14 @@ namespace ScanBot.Services
         private async Task<List<Label>> FindLabels(Image<Gray, ushort> image, ushort resolution)
         {
             using var byteImage = image.ToByteImage();
-            var labels = await m_Engine.FindLabels(byteImage);
+            // Ignored noise (IQI markers, etc.) is filtered before merging, not after: once a noise
+            // token has fused onto real data (e.g. "95P"+"IQI"+"T12" -> "95PIQIT12"), no pattern
+            // match can tell the noise apart from the data anymore, so removing it post-merge either
+            // misses it or - anchored - has to keep the whole contaminated label. Removing it here
+            // stops it from ever becoming a merge candidate in the first place.
+            var labels = (await m_Engine.FindLabels(byteImage))
+                .Where(label => !ImageTemplate.Default.MatchesIgnoredTagPattern(label.Text))
+                .ToList();
             labels.ForEach(label => label.OrientationHint = m_OrientationHintTags.ContainsKey(label.Text));
             var pixelSpacing = 25.4 / resolution;
             var mergeXDistance = (int)Math.Round(m_Settings.MergeXDistanceInMm / pixelSpacing);
