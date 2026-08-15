@@ -1,5 +1,6 @@
 ﻿using MtToolkit;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 
@@ -19,13 +20,37 @@ namespace ScanBot
         {
             try
             {
-                return JsonConvert.DeserializeObject<Settings>(File.ReadAllText(FilePath));
+                var json = File.ReadAllText(FilePath);
+                var settings = JsonConvert.DeserializeObject<Settings>(json);
+                MigrateMergeDistance(settings, json);
+                return settings;
             }
             catch
             {
                 var settings = new Settings();
                 settings.Save();
                 return settings;
+            }
+        }
+
+        // Settings.json written before MergeDistanceInMm was split into X/Y axes has a single
+        // value under Ocr; JsonConvert silently ignores unknown properties, so without this a
+        // site's tuned value would be discarded in favor of the new hardcoded defaults with no
+        // warning. Best-effort only - a malformed old value must never break settings loading.
+        private static void MigrateMergeDistance(Settings settings, string json)
+        {
+            try
+            {
+                var oldValue = JObject.Parse(json)["Ocr"]?["MergeDistanceInMm"]?.Value<double?>();
+                if (oldValue.HasValue)
+                {
+                    settings.Ocr.MergeXDistanceInMm = oldValue.Value;
+                    settings.Ocr.MergeYDistanceInMm = oldValue.Value;
+                    settings.Save();
+                }
+            }
+            catch
+            {
             }
         }
 
