@@ -34,11 +34,16 @@ namespace ScanBot.Data
             var resultLabels = new List<Label>();
             foreach (var label in labels.Where(label => !label.OrientationHint).OrderBy(label => label.Center.X))
             {
+                // Find the nearest candidate by position alone first, then decide whether locking
+                // allows the merge - checking !isLocked(label2.Text) as part of the search predicate
+                // would make LastOrDefault skip a locked nearest neighbor and reach past it to a
+                // farther unlocked one, which is exactly the cross-field fusion locking is meant to
+                // prevent. A label that is itself already a complete locked value (e.g. a full
+                // Piece_No_2 token in one OCR box) must not be merged into anything either.
                 var nearLabel = resultLabels.LastOrDefault(label2 =>
-                    !isLocked(label2.Text) &&
                     Math.Abs(label.Center.Y - label2.Center.Y) < yDistance &&
                     Math.Abs(label.Center.X - label2.Center.X) - (label.Rect.Width + label2.Rect.Width) / 2 < xDistance);
-                if (nearLabel != null)
+                if (nearLabel != null && !isLocked(nearLabel.Text) && !isLocked(label.Text))
                 {
                     nearLabel.Text += label.Text;
                     nearLabel.Rect = Rectangle.Union(nearLabel.Rect, label.Rect);
